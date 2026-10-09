@@ -1,0 +1,71 @@
+# cleanlisten wordlist.
+#
+#   damn        exact whole-word match
+#   damn*       stem match (damned, damning) - use sparingly, it over-matches
+#   god damn    phrase, matched across consecutive words
+#
+# Lines starting with # are comments. --tier N mutes tier N and everything
+# BELOW it, so tier 1 is the narrowest setting and tier 3 the broadest.
+
+[tier1]
+# Strongest profanity only.
+fuck*
+motherfuck*
+cunt
+cocksuck*
+nigger
+nigga
+
+[tier2]
+# Common profanity. This is the default.
+shit*
+bullshit
+bitch*
+asshole*
+bastard*
+dick
+dickhead
+prick
+piss*
+whore
+slut
+douche*
+jackass
+dumbass
+badass
+hardass
+smartass
+wanker
+twat
+tits
+titties
+goddamn*
+god damn
+god damned
+
+[tier3]
+# Mild profanity plus blasphemy. Expect more false positives here.
+damn*
+damnit
+dammit
+hell
+crap*
+ass
+arse
+bloody
+bugger
+git
+sod
+jesus christ
+jesus
+christ
+oh my god
+lord
+holy hell
+what the hell
+screw you
+frick*
+freaking
+friggin
+shoot
+darn*

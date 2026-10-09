@@ -1,0 +1,3 @@
+<resources>
+    <string name="volume_desc">Gives CleanListen its own volume so the original sound can be turned down while the cleaned sound plays. It does not read your screen.</string>
+</resources>
