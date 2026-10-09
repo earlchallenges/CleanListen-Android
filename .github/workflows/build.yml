@@ -1,0 +1,37 @@
+name: Build APK
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 17 }
+      - uses: gradle/actions/setup-gradle@v4
+        with: { gradle-version: "8.9" }
+      - name: Add speech model (Vosk small English, ~40 MB)
+        run: |
+          curl -sSL -o m.zip https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip
+          unzip -q m.zip
+          mkdir -p app/src/main/assets/model-en-us
+          cp -r vosk-model-small-en-us-0.15/* app/src/main/assets/model-en-us/
+          echo "vosk-small-en-us-0.15-${GITHUB_SHA}" > app/src/main/assets/model-en-us/uuid
+      - name: Build
+        run: gradle --no-daemon assembleRelease
+      - name: Rename
+        run: cp app/build/outputs/apk/release/app-release.apk CleanListen.apk
+      - uses: actions/upload-artifact@v4
+        with: { name: CleanListen-apk, path: CleanListen.apk }
+      - name: Publish download
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: CleanListen for Android (latest)
+          body: Download CleanListen.apk below and open it on the phone. See the README for setup.
+          files: CleanListen.apk
+          make_latest: true
